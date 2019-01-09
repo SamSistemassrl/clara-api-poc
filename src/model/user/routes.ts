@@ -19,11 +19,11 @@ router.use('/graphql', graphqlHTTP({
 }));
 
 router.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello User!');
 });
 
 router.get('/{id}', (req, res) => {
-    res.send('Returns an user');
+    res.send(`Returns the user ${id}`);
 });
 
 
