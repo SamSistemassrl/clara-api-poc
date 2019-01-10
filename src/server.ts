@@ -1,4 +1,5 @@
 import router from './routes';
+import Logger from './logger';
 const express = require('express');
 
 const app = express();
@@ -9,6 +10,6 @@ const HOST = process.env.HOST || '0.0.0.0';
 app.use(router);
 
 app.listen(PORT, HOST, () => {
-    console.log(`Running server at ${HOST}:${PORT}`);
+    Logger.info(`Running server at ${HOST}:${PORT}`);
 });
 

@@ -1,4 +1,4 @@
-class User {
+class UserClass {
     private id: number;
     private firstName: string;
     private lastName: string;
@@ -35,4 +35,4 @@ class User {
 
 }
 
-export default User;
+export default UserClass;

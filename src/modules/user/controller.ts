@@ -1,5 +1,6 @@
-import User from '../../data/model/user';
-import Repository from '../../data/repository/repository';
+import { User } from '../../data/mongodb/model/user';
+import UserClass from '../../service/model/user/userClass';
+import Repository from '../../data/repository/mongoRepository';
 
 class UserController {
 
@@ -9,9 +10,10 @@ class UserController {
         this.repository = repository;
     }
 
-    public getUserById(id) : User { // async getUserById(id) : Promise<User> {..}
-        return this.repository.getUserById(id); // return await ..
+    public /*async*/ getUserById(id) : UserClass /*Promise<User>*/ {
+        // return await this.repository.getById(id);
+        return new UserClass(id, 'Jhon', 'Snow');
     }
 }
 
-export default new UserController(new Repository<User>());
+export default new UserController(new Repository<User>(User));

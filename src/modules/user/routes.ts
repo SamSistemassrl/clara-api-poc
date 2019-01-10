@@ -2,10 +2,11 @@ import UserController from './controller';
 import schema from './schema';
 const graphqlHTTP = require('express-graphql');
 const express = require('express');
+import Logger from '../../logger';
 
 const router = express.Router();
 
-console.log('Route /users');
+Logger.info('Route /users');
 
 const root = {
     getUser: function ({id}) {
@@ -20,7 +21,7 @@ router.use('/graphql', graphqlHTTP({
 }));
 
 router.get('/', (req, res) => {
-    res.send('Hello User!');
+    res.send('Hello UserClass!');
 });
 
 router.get('/{id}', (req, res) => {
