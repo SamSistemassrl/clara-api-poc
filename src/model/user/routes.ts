@@ -1,8 +1,9 @@
-const express = require('express');
+import User from './user';
+import schema from './schema';
 const graphqlHTTP = require('express-graphql');
+const express = require('express');
+
 const router = express.Router();
-const User = require ('./user.ts');
-const schema = require ('./schema.ts');
 
 console.log('Route /users');
 
@@ -23,9 +24,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/{id}', (req, res) => {
-    res.send(`Returns the user ${id}`);
+    res.send(`Returns the user ${req.query.id}`);
 });
 
 
 
-module.exports = router;
+export default router;

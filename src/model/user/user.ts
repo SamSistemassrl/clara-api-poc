@@ -1,14 +1,19 @@
 class User {
-    constructor(id, firstName, lastName) {
+    private id: number;
+    private firstName: string;
+    private lastName: string;
+
+    constructor(id: number, firstName: string, lastName: string) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    static getUser(id) {
+
+    public static getUser(id): User {
         return new User(id, 'Lucas', 'Lopez');
     }
 
 }
 
-module.exports = User;
+export default User;
