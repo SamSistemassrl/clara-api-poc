@@ -1,4 +1,4 @@
-import User from './user';
+import UserController from './controller';
 import schema from './schema';
 const graphqlHTTP = require('express-graphql');
 const express = require('express');
@@ -9,7 +9,7 @@ console.log('Route /users');
 
 const root = {
     getUser: function ({id}) {
-        return User.getUser(id);
+        return UserController.getUserById(id);
     }
 };
 

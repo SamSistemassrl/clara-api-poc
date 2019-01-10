@@ -1,4 +1,4 @@
-import UsersRouter from './model/user/routes';
+import UsersRouter from './modules/user/routes';
 const express = require('express');
 
 const router = express.Router();
