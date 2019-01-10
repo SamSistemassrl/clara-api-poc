@@ -1,7 +1,7 @@
 import UserController from './controller';
 import schema from './schema';
-const graphqlHTTP = require('express-graphql');
-const express = require('express');
+import * as  graphqlHTTP from 'express-graphql';
+import * as express from 'express';
 import Logger from '../../logger';
 
 const router = express.Router();

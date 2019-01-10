@@ -1,6 +1,6 @@
 import router from './routes';
 import Logger from './logger';
-const express = require('express');
+import * as express from 'express';
 
 const app = express();
 
