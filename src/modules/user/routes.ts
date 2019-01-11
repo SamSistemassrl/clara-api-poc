@@ -1,4 +1,5 @@
 import UserController from './controller';
+import Class from '../../service/model/user/class';
 import schema from './schema';
 import * as  graphqlHTTP from 'express-graphql';
 import * as express from 'express';
@@ -9,9 +10,12 @@ const router = express.Router();
 Logger.info('Route /users');
 
 const root = {
-    getUser: function ({id}) {
-        return UserController.getUserById(id);
-    }
+    getById: function ({id}) {
+        return UserController.getById(id);
+    },
+    getByEmail: function ({email}) {
+        return UserController.getByEmail(email);
+    },
 };
 
 router.use('/graphql', graphqlHTTP({
@@ -21,12 +25,19 @@ router.use('/graphql', graphqlHTTP({
 }));
 
 router.get('/', (req, res) => {
-    res.send('Hello UserClass!');
+    res.send('Hello Class!');
+});
+
+router.post('/', async (req, res) => {
+    const user: Class = await UserController.create(req, res);
+    res.status(201).send(user);
 });
 
 router.get('/{id}', (req, res) => {
     res.send(`Returns the user ${req.query.id}`);
 });
+
+
 
 
 

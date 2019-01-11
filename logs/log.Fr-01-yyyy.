@@ -1,0 +1,1122 @@
+2019-01-11T13:27:09.230Z - info: Route /users
+2019-01-11T13:27:09.245Z - info: Running server at 0.0.0.0:4000
+2019-01-11T13:42:12.414Z - info: Route /users
+2019-01-11T13:42:12.429Z - info: Running server at 0.0.0.0:4000
+2019-01-11T13:42:46.853Z - info: Route /users
+2019-01-11T13:42:46.866Z - info: Running server at 0.0.0.0:4000
+2019-01-11T13:52:40.439Z - info: Route /users
+2019-01-11T13:52:40.452Z - info: Running server at 0.0.0.0:4000
+2019-01-11T13:55:49.477Z - info: Route /users
+2019-01-11T13:55:49.491Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:12:00.806Z - info: Route /users
+2019-01-11T14:12:00.821Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:16:31.233Z - info: Route /users
+2019-01-11T14:16:31.247Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:22:00.994Z - info: Route /users
+2019-01-11T14:22:01.009Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:24:11.742Z - info: Route /users
+2019-01-11T14:24:11.760Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:24:59.474Z - info: GET - By id
+2019-01-11T14:28:42.442Z - info: Route /users
+2019-01-11T14:28:42.457Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:34:24.542Z - info: Route /users
+2019-01-11T14:34:24.558Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:38:55.709Z - info: Route /users
+2019-01-11T14:38:55.723Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:39:15.897Z - info: GET - By id
+2019-01-11T14:39:41.857Z - info: GET - By email
+2019-01-11T14:39:57.712Z - info: GET - By id
+2019-01-11T14:42:14.933Z - info: POST - /
+2019-01-11T14:43:09.551Z - info: POST - /
+2019-01-11T14:43:43.090Z - info: Route /users
+2019-01-11T14:43:43.106Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:43:45.986Z - info: POST - /users/
+2019-01-11T14:44:21.665Z - info: Route /users
+2019-01-11T14:44:21.680Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:44:24.373Z - info: POST - /users/
+2019-01-11T14:44:24.374Z - info:  objectMode=false, highWaterMark=16384, head=null, tail=null, length=0, length=0, pipes=null, pipesCount=0, flowing=null, ended=false, endEmitted=false, reading=false, sync=true, needReadable=false, emittedReadable=false, readableListening=false, resumeScheduled=false, destroyed=false, defaultEncoding=utf8, awaitDrain=0, readingMore=true, decoder=null, encoding=null, readable=true, domain=null, , _eventsCount=0, _maxListeners=undefined, connecting=false, _hadError=false, reading=true, $ref=$["socket"], onread=function onread(nread, buffer) {
+  var handle = this;
+  var self = handle.owner;
+  assert(handle === self._handle, 'handle != self._handle');
+
+  self._unrefTimer();
+
+  debug('onread', nread);
+
+  if (nread > 0) {
+    debug('got data');
+
+    // read success.
+    // In theory (and in practice) calling readStop right now
+    // will prevent this from being called again until _read() gets
+    // called again.
+
+    // Optimization: emit the original buffer with end points
+    var ret = self.push(buffer);
+
+    if (handle.reading && !ret) {
+      handle.reading = false;
+      debug('readStop');
+      var err = handle.readStop();
+      if (err)
+        self.destroy(errnoException(err, 'read'));
+    }
+    return;
+  }
+
+  // if we didn't get any bytes, that doesn't necessarily mean EOF.
+  // wait for the next one.
+  if (nread === 0) {
+    debug('not any data, keep waiting');
+    return;
+  }
+
+  // Error, possibly EOF.
+  if (nread !== uv.UV_EOF) {
+    return self.destroy(errnoException(nread, 'read'));
+  }
+
+  debug('EOF');
+
+  // push a null to signal the end of data.
+  // Do it before `maybeDestroy` for correct order of events:
+  // `end` -> `close`
+  self.push(null);
+
+  if (self._readableState.length === 0) {
+    self.readable = false;
+    maybeDestroy(self);
+  }
+
+  // internal end event so that we know that the actual socket
+  // is no longer readable, and we can start the shutdown
+  // procedure. No need to wait for all the data to be consumed.
+  self.emit('_socketEnd');
+}, onconnection=null, writeQueueSize=0, _consumed=true, _parent=null, _host=null, objectMode=false, highWaterMark=16384, head=null, tail=null, length=0, length=0, pipes=null, pipesCount=0, flowing=true, ended=false, endEmitted=false, reading=true, sync=false, needReadable=true, emittedReadable=false, readableListening=false, resumeScheduled=false, destroyed=false, defaultEncoding=utf8, awaitDrain=0, readingMore=false, decoder=null, encoding=null, readable=true, domain=null, end=[function () { [native code] }, function () { [native code] }], _socketEnd=function onSocketEnd() {
+  // XXX Should not have to do as much in this function.
+  // ended should already be true, since this is called *after*
+  // the EOF errno and onread has eof'ed
+  debug('onSocketEnd', this._readableState);
+  this._readableState.ended = true;
+  if (this._readableState.endEmitted) {
+    this.readable = false;
+    maybeDestroy(this);
+  } else {
+    this.once('end', function end() {
+      this.readable = false;
+      maybeDestroy(this);
+    });
+    this.read(0);
+  }
+
+  if (!this.allowHalfOpen) {
+    this.write = writeAfterFIN;
+    this.destroySoon();
+  }
+}, drain=[function ondrain() {
+  if (this._httpMessage) this._httpMessage.emit('drain');
+}, function () { [native code] }], timeout=function socketOnTimeout() {
+  var req = this.parser && this.parser.incoming;
+  var reqTimeout = req && !req.complete && req.emit('timeout', this);
+  var res = this._httpMessage;
+  var resTimeout = res && res.emit('timeout', this);
+  var serverTimeout = this.server.emit('timeout', this);
+
+  if (!reqTimeout && !resTimeout && !serverTimeout)
+    this.destroy();
+}, data=function () { [native code] }, error=function socketOnError(e) {
+  // Ignore further errors
+  this.removeListener('error', socketOnError);
+  this.on('error', () => {});
+
+  if (!this.server.emit('clientError', e, this))
+    this.destroy(e);
+}, close=[function () { [native code] }, function onServerResponseClose() {
+  // EventEmitter.emit makes a copy of the 'close' listeners array before
+  // calling the listeners. detachSocket() unregisters onServerResponseClose
+  // but if detachSocket() is called, directly or indirectly, by a 'close'
+  // listener, onServerResponseClose is still in that copy of the listeners
+  // array. That is, in the example below, b still gets called even though
+  // it's been removed by a:
+  //
+  //   var EventEmitter = require('events');
+  //   var obj = new EventEmitter();
+  //   obj.on('event', a);
+  //   obj.on('event', b);
+  //   function a() { obj.removeListener('event', b) }
+  //   function b() { throw "BAM!" }
+  //   obj.emit('event');  // throws
+  //
+  // Ergo, we need to deal with stale 'close' events and handle the case
+  // where the ServerResponse object has already been deconstructed.
+  // Fortunately, that requires only a single if check. :-)
+  if (this._httpMessage) this._httpMessage.emit('close');
+}], resume=function onSocketResume() {
+  // It may seem that the socket is resumed, but this is an enemy's trick to
+  // deceive us! `resume` is emitted asynchronously, and may be called from
+  // `incoming.readStart()`. Stop the socket again here, just to preserve the
+  // state.
+  //
+  // We don't care about stream semantics for the consumed socket anyway.
+  if (this._paused) {
+    this.pause();
+    return;
+  }
+
+  if (this._handle && !this._handle.reading) {
+    this._handle.reading = true;
+    this._handle.readStart();
+  }
+}, pause=function onSocketPause() {
+  if (this._handle && this._handle.reading) {
+    this._handle.reading = false;
+    this._handle.readStop();
+  }
+}, _eventsCount=9, _maxListeners=undefined, objectMode=false, highWaterMark=16384, finalCalled=false, needDrain=false, ending=false, ended=false, finished=false, destroyed=false, decodeStrings=false, defaultEncoding=utf8, length=0, writing=false, corked=0, sync=true, bufferProcessing=false, onwrite=function () { [native code] }, writecb=null, writelen=0, bufferedRequest=null, lastBufferedRequest=null, pendingcb=0, prefinished=false, errorEmitted=false, bufferedRequestCount=0, next=null, entry=null, finish=function () { [native code] }, writable=true, allowHalfOpen=true, _bytesDispatched=0, _sockname=null, _pendingData=null, _pendingEncoding=, domain=null, request=function (req, res, next) {
+    app.handle(req, res, next);
+  }, connection=function connectionListener(socket) {
+  defaultTriggerAsyncIdScope(
+    getOrSetAsyncId(socket), connectionListenerInternal, this, socket
+  );
+}, _eventsCount=2, _maxListeners=undefined, _connections=1, reading=false, $ref=$["socket"]["server"], onread=null, onconnection=function onconnection(err, clientHandle) {
+  var handle = this;
+  var self = handle.owner;
+
+  debug('onconnection');
+
+  if (err) {
+    self.emit('error', errnoException(err, 'accept'));
+    return;
+  }
+
+  if (self.maxConnections && self._connections >= self.maxConnections) {
+    clientHandle.close();
+    return;
+  }
+
+  var socket = new Socket({
+    handle: clientHandle,
+    allowHalfOpen: self.allowHalfOpen,
+    pauseOnCreate: self.pauseOnConnect
+  });
+  socket.readable = socket.writable = true;
+
+
+  self._connections++;
+  socket.server = self;
+  socket._server = self;
+
+  ;
+  ;
+  ;
+  self.emit('connection', socket);
+}, writeQueueSize=0, _usingSlaves=false, _slaves=[], _unref=false, allowHalfOpen=true, pauseOnConnect=false, httpAllowHalfOpen=false, timeout=120000, keepAliveTimeout=5000, _pendingResponseData=0, maxHeadersCount=null, headersTimeout=40000, _connectionKey=4:0.0.0.0:4000, $ref=$["socket"]["server"], _idleTimeout=120000, $ref=$["socket"], $ref=$["socket"], 0=function listOnTimeout() {
+  var list = this._list;
+  var msecs = list.msecs;
+
+  if (list.nextTick) {
+    list.nextTick = false;
+    process.nextTick(listOnTimeoutNT, list);
+    return;
+  }
+
+  debug('timeout callback %d', msecs);
+
+  var now = TimerWrap.now();
+  debug('now: %d', now);
+
+  var diff, timer;
+  while (timer = L.peek(list)) {
+    diff = now - timer._idleStart;
+
+    // Check if this loop iteration is too early for the next timer.
+    // This happens if there are more timers scheduled for later in the list.
+    if (diff < msecs) {
+      var timeRemaining = msecs - (TimerWrap.now() - timer._idleStart);
+      if (timeRemaining < 0) {
+        timeRemaining = 1;
+      }
+      this.start(timeRemaining);
+      debug('%d list wait because diff is %d', msecs, diff);
+      return;
+    }
+
+    // The actual logic for when a timeout happens.
+
+    L.remove(timer);
+    assert(timer !== L.peek(list));
+
+    if (!timer._onTimeout) {
+      if (async_hook_fields[kDestroy] > 0 && !timer._destroyed &&
+            typeof timer[async_id_symbol] === 'number') {
+        emitDestroy(timer[async_id_symbol]);
+        timer._destroyed = true;
+      }
+      continue;
+    }
+
+    var domain = timer.domain;
+    if (domain) {
+
+      // If the timer callback throws and the
+      // domain or uncaughtException handler ignore the exception,
+      // other timers that expire on this tick should still run.
+      //
+      // https://github.com/nodejs/node-v0.x-archive/issues/2631
+      if (domain._disposed)
+        continue;
+
+      domain.enter();
+    }
+
+    tryOnTimeout(timer, list);
+
+    if (domain)
+      domain.exit();
+  }
+
+  // If `L.peek(list)` returned nothing, the list was either empty or we have
+  // called all of the timer timeouts.
+  // As such, we can remove the list and clean up the TimerWrap C++ handle.
+  debug('%d list empty', msecs);
+  assert(L.isEmpty(list));
+
+  deleteTimersList(list, msecs);
+
+  // Do not close the underlying handle if its ownership has changed
+  // (e.g it was unrefed in its callback).
+  if (this.owner)
+    return;
+
+  this.close();
+}, $ref=$["socket"]["_idleNext"], _unrefed=true, msecs=120000, nextTick=false, $ref=$["socket"]["_idleNext"], _idleStart=2986, _destroyed=false, 0=function parserOnHeaders(headers, url) {
+  // Once we exceeded headers limit - stop collecting them
+  if (this.maxHeaderPairs <= 0 ||
+      this._headers.length < this.maxHeaderPairs) {
+    this._headers = this._headers.concat(headers);
+  }
+  this._url += url;
+}, 1=function parserOnHeadersComplete(versionMajor, versionMinor, headers, method,
+                                 url, statusCode, statusMessage, upgrade,
+                                 shouldKeepAlive) {
+  const parser = this;
+  const { socket } = parser;
+
+  if (!headers) {
+    headers = parser._headers;
+    parser._headers = [];
+  }
+
+  if (!url) {
+    url = parser._url;
+    parser._url = '';
+  }
+
+  // Parser is also used by http client
+  const ParserIncomingMessage = (socket && socket.server &&
+                                 socket.server[kIncomingMessage]) ||
+                                 IncomingMessage;
+
+  parser.incoming = new ParserIncomingMessage(socket);
+  parser.incoming.httpVersionMajor = versionMajor;
+  parser.incoming.httpVersionMinor = versionMinor;
+  parser.incoming.httpVersion = `${versionMajor}.${versionMinor}`;
+  parser.incoming.url = url;
+
+  var n = headers.length;
+
+  // If parser.maxHeaderPairs <= 0 assume that there's no limit.
+  if (parser.maxHeaderPairs > 0)
+    n = Math.min(n, parser.maxHeaderPairs);
+
+  parser.incoming._addHeaderLines(headers, n);
+
+  if (typeof method === 'number') {
+    // server only
+    parser.incoming.method = methods[method];
+  } else {
+    // client only
+    parser.incoming.statusCode = statusCode;
+    parser.incoming.statusMessage = statusMessage;
+  }
+
+  if (upgrade && parser.outgoing !== null && !parser.outgoing.upgrading) {
+    // The client made non-upgrade request, and server is just advertising
+    // supported protocols.
+    //
+    // See RFC7230 Section 6.7
+    upgrade = false;
+  }
+
+  parser.incoming.upgrade = upgrade;
+
+  if (upgrade)
+    return 2;  // Skip body and treat as Upgrade.
+
+  return parser.onIncoming(parser.incoming, shouldKeepAlive);
+}, 2=function parserOnBody(b, start, len) {
+  var parser = this;
+  var stream = parser.incoming;
+
+  // if the stream has already been removed, then drop it.
+  if (!stream)
+    return;
+
+  var socket = stream.socket;
+
+  // pretend this was the result of a stream._read call.
+  if (len > 0 && !stream._dumped) {
+    var slice = b.slice(start, start + len);
+    var ret = stream.push(slice);
+    if (!ret)
+      readStop(socket);
+  }
+}, 3=function parserOnMessageComplete() {
+  var parser = this;
+  var stream = parser.incoming;
+
+  if (stream) {
+    stream.complete = true;
+    // Emit any trailing headers.
+    var headers = parser._headers;
+    if (headers) {
+      parser.incoming._addHeaderLines(headers, headers.length);
+      parser._headers = [];
+      parser._url = '';
+    }
+
+    // For emit end event
+    stream.push(null);
+  }
+
+  // force to read the next incoming message
+  readStart(parser.socket);
+}, 4=function () { [native code] }, _headers=[], _url=, _consumed=true, $ref=$["socket"], $ref=$, outgoing=null, parsingHeadersStart=0, maxHeaderPairs=2000, onIncoming=function () { [native code] }, on=function socketOnWrap(ev, fn) {
+  var res = net.Socket.prototype.on.call(this, ev, fn);
+  if (!this.parser) {
+    this.on = net.Socket.prototype.on;
+    return res;
+  }
+
+  if (ev === 'data' || ev === 'readable')
+    unconsume(this.parser, this);
+
+  return res;
+}, _paused=false, domain=null, finish=function () { [native code] }, _eventsCount=1, _maxListeners=undefined, output=[], outputEncodings=[], outputCallbacks=[], outputSize=0, writable=true, _last=false, upgrading=false, chunkedEncoding=false, shouldKeepAlive=true, useChunkedEncodingByDefault=true, sendDate=true, _removedConnection=false, _removedContLen=false, _removedTE=false, _contentLength=null, _hasBody=true, _trailer=, finished=false, _headerSent=false, $ref=$["socket"], $ref=$["socket"], _header=null, _onPendingData=function () { [native code] }, _sent100=false, _expect_continue=false, $ref=$, , $ref=$["socket"], httpVersionMajor=1, httpVersionMinor=1, httpVersion=1.1, complete=false, content-type=application/json, cache-control=no-cache, postman-token=bb8722f3-949a-4e0a-b51f-3606ceb6ffa2, user-agent=PostmanRuntime/7.6.0, accept=*/*, host=localhost:4000, accept-encoding=gzip, deflate, content-length=126, connection=keep-alive, rawHeaders=[Content-Type, application/json, cache-control, no-cache, Postman-Token, bb8722f3-949a-4e0a-b51f-3606ceb6ffa2, User-Agent, PostmanRuntime/7.6.0, Accept, */*, Host, localhost:4000, accept-encoding, gzip, deflate, content-length, 126, Connection, keep-alive], , rawTrailers=[], aborted=false, upgrade=false, url=/, method=POST, statusCode=null, statusMessage=null, $ref=$["socket"], _consuming=false, _dumped=false, next=function next(err) {
+    var layerError = err === 'route'
+      ? null
+      : err;
+
+    // remove added slash
+    if (slashAdded) {
+      req.url = req.url.substr(1);
+      slashAdded = false;
+    }
+
+    // restore altered req.url
+    if (removed.length !== 0) {
+      req.baseUrl = parentUrl;
+      req.url = protohost + removed + req.url.substr(protohost.length);
+      removed = '';
+    }
+
+    // signal to exit router
+    if (layerError === 'router') {
+      setImmediate(done, null)
+      return
+    }
+
+    // no more matching layers
+    if (idx >= stack.length) {
+      setImmediate(done, layerError);
+      return;
+    }
+
+    // get pathname of request
+    var path = getPathname(req);
+
+    if (path == null) {
+      return done(layerError);
+    }
+
+    // find next matching layer
+    var layer;
+    var match;
+    var route;
+
+    while (match !== true && idx < stack.length) {
+      layer = stack[idx++];
+      match = matchLayer(layer, path);
+      route = layer.route;
+
+      if (typeof match !== 'boolean') {
+        // hold on to layerError
+        layerError = layerError || match;
+      }
+
+      if (match !== true) {
+        continue;
+      }
+
+      if (!route) {
+        // process non-route handlers normally
+        continue;
+      }
+
+      if (layerError) {
+        // routes do not match with a pending error
+        match = false;
+        continue;
+      }
+
+      var method = req.method;
+      var has_method = route._handles_method(method);
+
+      // build up automatic options response
+      if (!has_method && method === 'OPTIONS') {
+        appendMethods(options, route._options());
+      }
+
+      // don't even bother matching route
+      if (!has_method && method !== 'HEAD') {
+        match = false;
+        continue;
+      }
+    }
+
+    // no match
+    if (match !== true) {
+      return done(layerError);
+    }
+
+    // store route for dispatch on change
+    if (route) {
+      req.route = route;
+    }
+
+    // Capture one-time layer values
+    req.params = self.mergeParams
+      ? mergeParams(layer.params, parentParams)
+      : layer.params;
+    var layerPath = layer.path;
+
+    // this should be done for the layer
+    self.process_params(layer, paramcalled, req, res, function (err) {
+      if (err) {
+        return next(layerError || err);
+      }
+
+      if (route) {
+        return layer.handle_request(req, res, next);
+      }
+
+      trim_prefix(layer, layerError, layerPath, path);
+    });
+  }, baseUrl=/users, originalUrl=/users, protocol=null, slashes=null, auth=null, host=null, port=null, hostname=null, hash=null, search=null, query=null, pathname=/, path=/, href=/, _raw=/, , , $ref=$["socket"]["_httpMessage"], path=/, stack=[handle=(req, res) => {
+    controller_1.default.create(req, res);
+}, name=<anonymous>, params=undefined, path=undefined, keys=[], fast_star=false, fast_slash=false, method=post], post=true
+2019-01-11T14:50:09.690Z - info: Route /users
+2019-01-11T14:50:09.704Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:50:13.850Z - info: POST - /users/
+2019-01-11T14:50:13.850Z - info:  objectMode=false, highWaterMark=16384, head=null, tail=null, length=0, length=0, pipes=null, pipesCount=0, flowing=true, ended=true, endEmitted=true, reading=false, sync=false, needReadable=false, emittedReadable=false, readableListening=false, resumeScheduled=false, destroyed=false, defaultEncoding=utf8, awaitDrain=0, readingMore=false, decoder=null, encoding=null, readable=false, domain=null, , _eventsCount=0, _maxListeners=undefined, connecting=false, _hadError=false, reading=true, $ref=$["socket"], onread=function onread(nread, buffer) {
+  var handle = this;
+  var self = handle.owner;
+  assert(handle === self._handle, 'handle != self._handle');
+
+  self._unrefTimer();
+
+  debug('onread', nread);
+
+  if (nread > 0) {
+    debug('got data');
+
+    // read success.
+    // In theory (and in practice) calling readStop right now
+    // will prevent this from being called again until _read() gets
+    // called again.
+
+    // Optimization: emit the original buffer with end points
+    var ret = self.push(buffer);
+
+    if (handle.reading && !ret) {
+      handle.reading = false;
+      debug('readStop');
+      var err = handle.readStop();
+      if (err)
+        self.destroy(errnoException(err, 'read'));
+    }
+    return;
+  }
+
+  // if we didn't get any bytes, that doesn't necessarily mean EOF.
+  // wait for the next one.
+  if (nread === 0) {
+    debug('not any data, keep waiting');
+    return;
+  }
+
+  // Error, possibly EOF.
+  if (nread !== uv.UV_EOF) {
+    return self.destroy(errnoException(nread, 'read'));
+  }
+
+  debug('EOF');
+
+  // push a null to signal the end of data.
+  // Do it before `maybeDestroy` for correct order of events:
+  // `end` -> `close`
+  self.push(null);
+
+  if (self._readableState.length === 0) {
+    self.readable = false;
+    maybeDestroy(self);
+  }
+
+  // internal end event so that we know that the actual socket
+  // is no longer readable, and we can start the shutdown
+  // procedure. No need to wait for all the data to be consumed.
+  self.emit('_socketEnd');
+}, onconnection=null, writeQueueSize=0, _consumed=true, _parent=null, _host=null, objectMode=false, highWaterMark=16384, head=null, tail=null, length=0, length=0, pipes=null, pipesCount=0, flowing=true, ended=false, endEmitted=false, reading=true, sync=false, needReadable=true, emittedReadable=false, readableListening=false, resumeScheduled=false, destroyed=false, defaultEncoding=utf8, awaitDrain=0, readingMore=false, decoder=null, encoding=null, readable=true, domain=null, end=[function () { [native code] }, function () { [native code] }], _socketEnd=function onSocketEnd() {
+  // XXX Should not have to do as much in this function.
+  // ended should already be true, since this is called *after*
+  // the EOF errno and onread has eof'ed
+  debug('onSocketEnd', this._readableState);
+  this._readableState.ended = true;
+  if (this._readableState.endEmitted) {
+    this.readable = false;
+    maybeDestroy(this);
+  } else {
+    this.once('end', function end() {
+      this.readable = false;
+      maybeDestroy(this);
+    });
+    this.read(0);
+  }
+
+  if (!this.allowHalfOpen) {
+    this.write = writeAfterFIN;
+    this.destroySoon();
+  }
+}, drain=[function ondrain() {
+  if (this._httpMessage) this._httpMessage.emit('drain');
+}, function () { [native code] }], timeout=function socketOnTimeout() {
+  var req = this.parser && this.parser.incoming;
+  var reqTimeout = req && !req.complete && req.emit('timeout', this);
+  var res = this._httpMessage;
+  var resTimeout = res && res.emit('timeout', this);
+  var serverTimeout = this.server.emit('timeout', this);
+
+  if (!reqTimeout && !resTimeout && !serverTimeout)
+    this.destroy();
+}, data=function () { [native code] }, error=function socketOnError(e) {
+  // Ignore further errors
+  this.removeListener('error', socketOnError);
+  this.on('error', () => {});
+
+  if (!this.server.emit('clientError', e, this))
+    this.destroy(e);
+}, close=[function () { [native code] }, function onServerResponseClose() {
+  // EventEmitter.emit makes a copy of the 'close' listeners array before
+  // calling the listeners. detachSocket() unregisters onServerResponseClose
+  // but if detachSocket() is called, directly or indirectly, by a 'close'
+  // listener, onServerResponseClose is still in that copy of the listeners
+  // array. That is, in the example below, b still gets called even though
+  // it's been removed by a:
+  //
+  //   var EventEmitter = require('events');
+  //   var obj = new EventEmitter();
+  //   obj.on('event', a);
+  //   obj.on('event', b);
+  //   function a() { obj.removeListener('event', b) }
+  //   function b() { throw "BAM!" }
+  //   obj.emit('event');  // throws
+  //
+  // Ergo, we need to deal with stale 'close' events and handle the case
+  // where the ServerResponse object has already been deconstructed.
+  // Fortunately, that requires only a single if check. :-)
+  if (this._httpMessage) this._httpMessage.emit('close');
+}], resume=function onSocketResume() {
+  // It may seem that the socket is resumed, but this is an enemy's trick to
+  // deceive us! `resume` is emitted asynchronously, and may be called from
+  // `incoming.readStart()`. Stop the socket again here, just to preserve the
+  // state.
+  //
+  // We don't care about stream semantics for the consumed socket anyway.
+  if (this._paused) {
+    this.pause();
+    return;
+  }
+
+  if (this._handle && !this._handle.reading) {
+    this._handle.reading = true;
+    this._handle.readStart();
+  }
+}, pause=function onSocketPause() {
+  if (this._handle && this._handle.reading) {
+    this._handle.reading = false;
+    this._handle.readStop();
+  }
+}, _eventsCount=9, _maxListeners=undefined, objectMode=false, highWaterMark=16384, finalCalled=false, needDrain=false, ending=false, ended=false, finished=false, destroyed=false, decodeStrings=false, defaultEncoding=utf8, length=0, writing=false, corked=0, sync=true, bufferProcessing=false, onwrite=function () { [native code] }, writecb=null, writelen=0, bufferedRequest=null, lastBufferedRequest=null, pendingcb=0, prefinished=false, errorEmitted=false, bufferedRequestCount=0, next=null, entry=null, finish=function () { [native code] }, writable=true, allowHalfOpen=true, _bytesDispatched=0, _sockname=null, _pendingData=null, _pendingEncoding=, domain=null, request=function (req, res, next) {
+    app.handle(req, res, next);
+  }, connection=function connectionListener(socket) {
+  defaultTriggerAsyncIdScope(
+    getOrSetAsyncId(socket), connectionListenerInternal, this, socket
+  );
+}, _eventsCount=2, _maxListeners=undefined, _connections=1, reading=false, $ref=$["socket"]["server"], onread=null, onconnection=function onconnection(err, clientHandle) {
+  var handle = this;
+  var self = handle.owner;
+
+  debug('onconnection');
+
+  if (err) {
+    self.emit('error', errnoException(err, 'accept'));
+    return;
+  }
+
+  if (self.maxConnections && self._connections >= self.maxConnections) {
+    clientHandle.close();
+    return;
+  }
+
+  var socket = new Socket({
+    handle: clientHandle,
+    allowHalfOpen: self.allowHalfOpen,
+    pauseOnCreate: self.pauseOnConnect
+  });
+  socket.readable = socket.writable = true;
+
+
+  self._connections++;
+  socket.server = self;
+  socket._server = self;
+
+  ;
+  ;
+  ;
+  self.emit('connection', socket);
+}, writeQueueSize=0, _usingSlaves=false, _slaves=[], _unref=false, allowHalfOpen=true, pauseOnConnect=false, httpAllowHalfOpen=false, timeout=120000, keepAliveTimeout=5000, _pendingResponseData=0, maxHeadersCount=null, headersTimeout=40000, _connectionKey=4:0.0.0.0:4000, $ref=$["socket"]["server"], _idleTimeout=120000, $ref=$["socket"], $ref=$["socket"], 0=function listOnTimeout() {
+  var list = this._list;
+  var msecs = list.msecs;
+
+  if (list.nextTick) {
+    list.nextTick = false;
+    process.nextTick(listOnTimeoutNT, list);
+    return;
+  }
+
+  debug('timeout callback %d', msecs);
+
+  var now = TimerWrap.now();
+  debug('now: %d', now);
+
+  var diff, timer;
+  while (timer = L.peek(list)) {
+    diff = now - timer._idleStart;
+
+    // Check if this loop iteration is too early for the next timer.
+    // This happens if there are more timers scheduled for later in the list.
+    if (diff < msecs) {
+      var timeRemaining = msecs - (TimerWrap.now() - timer._idleStart);
+      if (timeRemaining < 0) {
+        timeRemaining = 1;
+      }
+      this.start(timeRemaining);
+      debug('%d list wait because diff is %d', msecs, diff);
+      return;
+    }
+
+    // The actual logic for when a timeout happens.
+
+    L.remove(timer);
+    assert(timer !== L.peek(list));
+
+    if (!timer._onTimeout) {
+      if (async_hook_fields[kDestroy] > 0 && !timer._destroyed &&
+            typeof timer[async_id_symbol] === 'number') {
+        emitDestroy(timer[async_id_symbol]);
+        timer._destroyed = true;
+      }
+      continue;
+    }
+
+    var domain = timer.domain;
+    if (domain) {
+
+      // If the timer callback throws and the
+      // domain or uncaughtException handler ignore the exception,
+      // other timers that expire on this tick should still run.
+      //
+      // https://github.com/nodejs/node-v0.x-archive/issues/2631
+      if (domain._disposed)
+        continue;
+
+      domain.enter();
+    }
+
+    tryOnTimeout(timer, list);
+
+    if (domain)
+      domain.exit();
+  }
+
+  // If `L.peek(list)` returned nothing, the list was either empty or we have
+  // called all of the timer timeouts.
+  // As such, we can remove the list and clean up the TimerWrap C++ handle.
+  debug('%d list empty', msecs);
+  assert(L.isEmpty(list));
+
+  deleteTimersList(list, msecs);
+
+  // Do not close the underlying handle if its ownership has changed
+  // (e.g it was unrefed in its callback).
+  if (this.owner)
+    return;
+
+  this.close();
+}, $ref=$["socket"]["_idleNext"], _unrefed=true, msecs=120000, nextTick=false, $ref=$["socket"]["_idleNext"], _idleStart=4452, _destroyed=false, 0=function parserOnHeaders(headers, url) {
+  // Once we exceeded headers limit - stop collecting them
+  if (this.maxHeaderPairs <= 0 ||
+      this._headers.length < this.maxHeaderPairs) {
+    this._headers = this._headers.concat(headers);
+  }
+  this._url += url;
+}, 1=function parserOnHeadersComplete(versionMajor, versionMinor, headers, method,
+                                 url, statusCode, statusMessage, upgrade,
+                                 shouldKeepAlive) {
+  const parser = this;
+  const { socket } = parser;
+
+  if (!headers) {
+    headers = parser._headers;
+    parser._headers = [];
+  }
+
+  if (!url) {
+    url = parser._url;
+    parser._url = '';
+  }
+
+  // Parser is also used by http client
+  const ParserIncomingMessage = (socket && socket.server &&
+                                 socket.server[kIncomingMessage]) ||
+                                 IncomingMessage;
+
+  parser.incoming = new ParserIncomingMessage(socket);
+  parser.incoming.httpVersionMajor = versionMajor;
+  parser.incoming.httpVersionMinor = versionMinor;
+  parser.incoming.httpVersion = `${versionMajor}.${versionMinor}`;
+  parser.incoming.url = url;
+
+  var n = headers.length;
+
+  // If parser.maxHeaderPairs <= 0 assume that there's no limit.
+  if (parser.maxHeaderPairs > 0)
+    n = Math.min(n, parser.maxHeaderPairs);
+
+  parser.incoming._addHeaderLines(headers, n);
+
+  if (typeof method === 'number') {
+    // server only
+    parser.incoming.method = methods[method];
+  } else {
+    // client only
+    parser.incoming.statusCode = statusCode;
+    parser.incoming.statusMessage = statusMessage;
+  }
+
+  if (upgrade && parser.outgoing !== null && !parser.outgoing.upgrading) {
+    // The client made non-upgrade request, and server is just advertising
+    // supported protocols.
+    //
+    // See RFC7230 Section 6.7
+    upgrade = false;
+  }
+
+  parser.incoming.upgrade = upgrade;
+
+  if (upgrade)
+    return 2;  // Skip body and treat as Upgrade.
+
+  return parser.onIncoming(parser.incoming, shouldKeepAlive);
+}, 2=function parserOnBody(b, start, len) {
+  var parser = this;
+  var stream = parser.incoming;
+
+  // if the stream has already been removed, then drop it.
+  if (!stream)
+    return;
+
+  var socket = stream.socket;
+
+  // pretend this was the result of a stream._read call.
+  if (len > 0 && !stream._dumped) {
+    var slice = b.slice(start, start + len);
+    var ret = stream.push(slice);
+    if (!ret)
+      readStop(socket);
+  }
+}, 3=function parserOnMessageComplete() {
+  var parser = this;
+  var stream = parser.incoming;
+
+  if (stream) {
+    stream.complete = true;
+    // Emit any trailing headers.
+    var headers = parser._headers;
+    if (headers) {
+      parser.incoming._addHeaderLines(headers, headers.length);
+      parser._headers = [];
+      parser._url = '';
+    }
+
+    // For emit end event
+    stream.push(null);
+  }
+
+  // force to read the next incoming message
+  readStart(parser.socket);
+}, 4=function () { [native code] }, _headers=[], _url=, _consumed=true, $ref=$["socket"], $ref=$, outgoing=null, parsingHeadersStart=0, maxHeaderPairs=2000, onIncoming=function () { [native code] }, on=function socketOnWrap(ev, fn) {
+  var res = net.Socket.prototype.on.call(this, ev, fn);
+  if (!this.parser) {
+    this.on = net.Socket.prototype.on;
+    return res;
+  }
+
+  if (ev === 'data' || ev === 'readable')
+    unconsume(this.parser, this);
+
+  return res;
+}, _paused=false, domain=null, finish=function () { [native code] }, _eventsCount=1, _maxListeners=undefined, output=[], outputEncodings=[], outputCallbacks=[], outputSize=0, writable=true, _last=false, upgrading=false, chunkedEncoding=false, shouldKeepAlive=true, useChunkedEncodingByDefault=true, sendDate=true, _removedConnection=false, _removedContLen=false, _removedTE=false, _contentLength=null, _hasBody=true, _trailer=, finished=false, _headerSent=false, $ref=$["socket"], $ref=$["socket"], _header=null, _onPendingData=function () { [native code] }, _sent100=false, _expect_continue=false, $ref=$, , $ref=$["socket"], httpVersionMajor=1, httpVersionMinor=1, httpVersion=1.1, complete=true, content-type=application/json, cache-control=no-cache, postman-token=c7b0b00f-ed1f-4874-a691-fc9da2d89539, user-agent=PostmanRuntime/7.6.0, accept=*/*, host=localhost:4000, accept-encoding=gzip, deflate, content-length=126, connection=keep-alive, rawHeaders=[Content-Type, application/json, cache-control, no-cache, Postman-Token, c7b0b00f-ed1f-4874-a691-fc9da2d89539, User-Agent, PostmanRuntime/7.6.0, Accept, */*, Host, localhost:4000, accept-encoding, gzip, deflate, content-length, 126, Connection, keep-alive], , rawTrailers=[], aborted=false, upgrade=false, url=/, method=POST, statusCode=null, statusMessage=null, $ref=$["socket"], _consuming=true, _dumped=false, next=function next(err) {
+    var layerError = err === 'route'
+      ? null
+      : err;
+
+    // remove added slash
+    if (slashAdded) {
+      req.url = req.url.substr(1);
+      slashAdded = false;
+    }
+
+    // restore altered req.url
+    if (removed.length !== 0) {
+      req.baseUrl = parentUrl;
+      req.url = protohost + removed + req.url.substr(protohost.length);
+      removed = '';
+    }
+
+    // signal to exit router
+    if (layerError === 'router') {
+      setImmediate(done, null)
+      return
+    }
+
+    // no more matching layers
+    if (idx >= stack.length) {
+      setImmediate(done, layerError);
+      return;
+    }
+
+    // get pathname of request
+    var path = getPathname(req);
+
+    if (path == null) {
+      return done(layerError);
+    }
+
+    // find next matching layer
+    var layer;
+    var match;
+    var route;
+
+    while (match !== true && idx < stack.length) {
+      layer = stack[idx++];
+      match = matchLayer(layer, path);
+      route = layer.route;
+
+      if (typeof match !== 'boolean') {
+        // hold on to layerError
+        layerError = layerError || match;
+      }
+
+      if (match !== true) {
+        continue;
+      }
+
+      if (!route) {
+        // process non-route handlers normally
+        continue;
+      }
+
+      if (layerError) {
+        // routes do not match with a pending error
+        match = false;
+        continue;
+      }
+
+      var method = req.method;
+      var has_method = route._handles_method(method);
+
+      // build up automatic options response
+      if (!has_method && method === 'OPTIONS') {
+        appendMethods(options, route._options());
+      }
+
+      // don't even bother matching route
+      if (!has_method && method !== 'HEAD') {
+        match = false;
+        continue;
+      }
+    }
+
+    // no match
+    if (match !== true) {
+      return done(layerError);
+    }
+
+    // store route for dispatch on change
+    if (route) {
+      req.route = route;
+    }
+
+    // Capture one-time layer values
+    req.params = self.mergeParams
+      ? mergeParams(layer.params, parentParams)
+      : layer.params;
+    var layerPath = layer.path;
+
+    // this should be done for the layer
+    self.process_params(layer, paramcalled, req, res, function (err) {
+      if (err) {
+        return next(layerError || err);
+      }
+
+      if (route) {
+        return layer.handle_request(req, res, next);
+      }
+
+      trim_prefix(layer, layerError, layerPath, path);
+    });
+  }, baseUrl=/users, originalUrl=/users, protocol=null, slashes=null, auth=null, host=null, port=null, hostname=null, hash=null, search=null, query=null, pathname=/, path=/, href=/, _raw=/, , , $ref=$["socket"]["_httpMessage"], id=10, firstName=Nicolas, lastName=Sciuto, email=nicolas.sciuot@samsistemas.com.ar, _body=true, length=undefined, read=function (n) {
+  debug('read', n);
+  n = parseInt(n, 10);
+  var state = this._readableState;
+  var nOrig = n;
+
+  if (n !== 0)
+    state.emittedReadable = false;
+
+  // if we're doing read(0) to trigger a readable event, but we
+  // already have a bunch of data in the buffer, then just trigger
+  // the 'readable' event and move on.
+  if (n === 0 &&
+      state.needReadable &&
+      (state.length >= state.highWaterMark || state.ended)) {
+    debug('read: emitReadable', state.length, state.ended);
+    if (state.length === 0 && state.ended)
+      endReadable(this);
+    else
+      emitReadable(this);
+    return null;
+  }
+
+  n = howMuchToRead(n, state);
+
+  // if we've ended, and we're now clear, then finish it up.
+  if (n === 0 && state.ended) {
+    if (state.length === 0)
+      endReadable(this);
+    return null;
+  }
+
+  // All the actual chunk generation logic needs to be
+  // *below* the call to _read.  The reason is that in certain
+  // synthetic stream cases, such as passthrough streams, _read
+  // may be a completely synchronous operation which may change
+  // the state of the read buffer, providing enough data when
+  // before there was *not* enough.
+  //
+  // So, the steps are:
+  // 1. Figure out what the state of things will be after we do
+  // a read from the buffer.
+  //
+  // 2. If that resulting state will trigger a _read, then call _read.
+  // Note that this may be asynchronous, or synchronous.  Yes, it is
+  // deeply ugly to write APIs this way, but that still doesn't mean
+  // that the Readable class should behave improperly, as streams are
+  // designed to be sync/async agnostic.
+  // Take note if the _read call is sync or async (ie, if the read call
+  // has returned yet), so that we know whether or not it's safe to emit
+  // 'readable' etc.
+  //
+  // 3. Actually pull the requested chunks out of the buffer and return.
+
+  // if we need a readable event, then we need to do some reading.
+  var doRead = state.needReadable;
+  debug('need readable', doRead);
+
+  // if we currently have less than the highWaterMark, then also read some
+  if (state.length === 0 || state.length - n < state.highWaterMark) {
+    doRead = true;
+    debug('length less than watermark', doRead);
+  }
+
+  // however, if we've ended, then there's no point, and if we're already
+  // reading, then it's unnecessary.
+  if (state.ended || state.reading) {
+    doRead = false;
+    debug('reading or ended', doRead);
+  } else if (doRead) {
+    debug('do read');
+    state.reading = true;
+    state.sync = true;
+    // if the length is currently zero, then we *need* a readable event.
+    if (state.length === 0)
+      state.needReadable = true;
+    // call internal read method
+    this._read(state.highWaterMark);
+    state.sync = false;
+    // If _read pushed data synchronously, then `reading` will be false,
+    // and we need to re-evaluate how much data we can return to the user.
+    if (!state.reading)
+      n = howMuchToRead(nOrig, state);
+  }
+
+  var ret;
+  if (n > 0)
+    ret = fromList(n, state);
+  else
+    ret = null;
+
+  if (ret === null) {
+    state.needReadable = true;
+    n = 0;
+  } else {
+    state.length -= n;
+  }
+
+  if (state.length === 0) {
+    // If we have nothing in the buffer, then we want to know
+    // as soon as we *do* get something into the buffer.
+    if (!state.ended)
+      state.needReadable = true;
+
+    // If we tried to read() past the EOF, then emit end on the next tick.
+    if (nOrig !== n && state.ended)
+      endReadable(this);
+  }
+
+  if (ret !== null)
+    this.emit('data', ret);
+
+  return ret;
+}, path=/, stack=[handle=(req, res) => {
+    controller_1.default.create(req, res);
+}, name=<anonymous>, params=undefined, path=undefined, keys=[], fast_star=false, fast_slash=false, method=post], post=true
+2019-01-11T14:50:13.879Z - info:  id=10, firstName=Nicolas, lastName=Sciuto, email=nicolas.sciuot@samsistemas.com.ar
+2019-01-11T14:52:53.646Z - info: Route /users
+2019-01-11T14:52:53.662Z - info: Running server at 0.0.0.0:4000
+2019-01-11T14:52:59.659Z - info: POST - /users/
+2019-01-11T14:52:59.660Z - info:  id=10, firstName=Nicolas, lastName=Sciuto, email=nicolas.sciuot@samsistemas.com.ar
+2019-01-11T14:53:35.671Z - info: GET - By id
+2019-01-11T14:53:52.699Z - info: GET - By email
+2019-01-11T14:53:58.576Z - info: GET - By id

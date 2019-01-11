@@ -2,11 +2,13 @@ class UserClass {
     private id: number;
     private firstName: string;
     private lastName: string;
+    private email: string;
 
-    constructor(id: number, firstName: string, lastName: string) {
+    constructor(id?, firstName?, lastName?, email?) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     getId(): number {
@@ -31,6 +33,14 @@ class UserClass {
 
     setLastName(lastName: string) {
         this.lastName = lastName;
+    }
+
+    getEmail(): string {
+        return this.email;
+    }
+
+    setEmail(email: string) {
+        this.email = email;
     }
 
 }

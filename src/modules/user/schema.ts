@@ -5,10 +5,12 @@ const schema = buildSchema(`
     id: Int!
     firstName: String!
     lastName: String!
+    email: String!
   }
 
   type Query {
-    getUser(id: Int): User
+    getById(id: Int): User,
+    getByEmail(email: String): User
   }
 `);
 

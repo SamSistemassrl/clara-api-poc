@@ -1,19 +1,59 @@
-import { User } from '../../data/mongodb/model/user';
-import UserClass from '../../service/model/user/userClass';
-import Repository from '../../data/repository/mongoRepository';
+import Class from '../../service/model/user/class';
+import Service from '../../service/model/user/service';
+import Logger from '../../logger';
+import * as Boom from "boom";
 
 class UserController {
 
-    private repository: Repository<User>;
+    constructor(){}
 
-    constructor(repository: Repository<User>){
-        this.repository = repository;
+    public async create(req, res) {
+        try {
+
+            Logger.info(`${req.method} - ${req.baseUrl}${req.path}`);
+
+            const { user } = req.body;
+
+            Logger.info(user);
+
+            let newUser: Class = await Service.create(user);
+
+            if (!newUser) throw new Error('Unable to create the new user.');
+
+            return newUser;
+
+        } catch (error) {
+            return res.send(Boom.badRequest(`I think something went wrong... ${error}`));
+        }
     }
 
-    public /*async*/ getUserById(id) : UserClass /*Promise<User>*/ {
-        // return await this.repository.getById(id);
-        return new UserClass(id, 'Jhon', 'Snow');
+
+    public async getById(id: number): Promise <Class> {
+        try {
+
+            Logger.info(`GET - By id`);
+
+            return await Service.getById(id);
+
+        } catch (error) {
+            return Boom.badRequest(`I think something went wrong... ${error}`);
+        }
+
     }
+
+    public async getByEmail(email: string): Promise <Class> {
+        try {
+
+            Logger.info(`GET - By email`);
+
+            return await Service.getByEmail(email);
+
+        } catch (error) {
+            return Boom.badRequest(`I think something went wrong... ${error}`);
+        }
+
+    }
+
 }
 
-export default new UserController(new Repository<User>(User));
+export default new UserController();

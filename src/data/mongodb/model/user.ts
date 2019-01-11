@@ -14,6 +14,9 @@ export class User extends Typegoose {
     @prop({ required: true })
     private lastName!: string;
 
+    @prop({ required: true })
+    private email!: string;
+
 }
 
 export default new User().getModelForClass(User, {
