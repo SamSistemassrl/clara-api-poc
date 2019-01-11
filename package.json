@@ -6,6 +6,7 @@
   "author": "Nicolas Sciuto <nicolassciuto@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "bsw": "yarn bs",
     "bs": "yarn clean && yarn compile && yarn start",
     "start": "node -r dotenv/config ./dist/server.js",
     "clean": "rimraf ./dist",
