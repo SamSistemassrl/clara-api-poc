@@ -1,0 +1,8 @@
+version: "2"
+services:
+  api:    
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/home/node/src/
+    image: "prodigynetworktechnology/nodefull:1-node8"
