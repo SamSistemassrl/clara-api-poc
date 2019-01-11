@@ -1,4 +1,3 @@
-import Router from './routes';
 import Logger from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
@@ -15,13 +14,13 @@ class Server {
 
     public async init() {
         try {
+            await Connector.init();
 
             const server = express();
 
             server.use(bodyParser.json());
-            server.use(Router);
+            server.use(require("./routes").default);
 
-            await Connector.init();
 
             server.listen(PORT, HOST, () => {
                 Logger.info(`Server - Up and running on: ${process.env.HOST}:${process.env.PORT}`);
