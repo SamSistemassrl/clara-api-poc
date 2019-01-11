@@ -24,8 +24,10 @@ router.use('/graphql', graphqlHTTP({
     graphiql: true,
 }));
 
-router.get('/', (req, res) => {
-    res.send('Hello Class!');
+// TODO: Change paths.
+router.get('/email', async (req, res) => {
+    const user: Class = await UserController.getByEmail(req.body.email);
+    res.status(200).send(user);
 });
 
 router.post('/', async (req, res) => {
@@ -33,8 +35,9 @@ router.post('/', async (req, res) => {
     res.status(201).send(user);
 });
 
-router.get('/{id}', (req, res) => {
-    res.send(`Returns the user ${req.query.id}`);
+router.get('/id', async (req, res) => {
+    const user: Class = await UserController.getById(req.body.id);
+    res.status(200).send(user);
 });
 
 

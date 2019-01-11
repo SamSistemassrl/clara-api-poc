@@ -1120,3 +1120,158 @@
 2019-01-11T14:53:35.671Z - info: GET - By id
 2019-01-11T14:53:52.699Z - info: GET - By email
 2019-01-11T14:53:58.576Z - info: GET - By id
+2019-01-11T15:25:17.054Z - info: Route /users
+2019-01-11T15:25:17.071Z - info: Running server at 0.0.0.0:4000
+2019-01-11T15:29:59.673Z - info: Route /users
+2019-01-11T15:29:59.695Z - info: Running server at 0.0.0.0:4000
+2019-01-11T15:30:17.505Z - info: POST - /users/
+2019-01-11T15:30:17.506Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.comr
+2019-01-11T15:30:17.517Z - info: User created.
+2019-01-11T15:36:51.750Z - info: Route /users
+2019-01-11T15:36:51.759Z - info: Database - Creating database connections.
+2019-01-11T15:36:51.760Z - info: Database - Initializing database connection.
+2019-01-11T15:36:51.780Z - error: MongoError: failed to connect to server [undefined:27017] on first connect [MongoError: getaddrinfo ENOTFOUND undefined undefined:27017]
+    at Pool.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/topologies/server.js:336:35)
+    at emitOne (events.js:116:13)
+    at Pool.emit (events.js:211:7)
+    at Connection.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/connection/pool.js:280:12)
+    at Object.onceWrapper (events.js:317:30)
+    at emitTwo (events.js:126:13)
+    at Connection.emit (events.js:214:7)
+    at Socket.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/connection/connection.js:189:49)
+    at Object.onceWrapper (events.js:315:30)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at emitErrorNT (internal/streams/destroy.js:66:8)
+    at _combinedTickCallback (internal/process/next_tick.js:139:11)
+    at process._tickCallback (internal/process/next_tick.js:181:9)
+2019-01-11T15:36:51.781Z - error: Server - There was something wrong: MongoError: failed to connect to server [undefined:27017] on first connect [MongoError: getaddrinfo ENOTFOUND undefined undefined:27017]
+2019-01-11T17:20:29.513Z - info: Route /users
+2019-01-11T17:20:29.524Z - info: Database - Creating database connections.
+2019-01-11T17:20:29.526Z - info: Database - Initializing database connection.
+2019-01-11T17:20:30.980Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017,clara-shard-00-01-2katb.mongodb.net:27017,clara-shard-00-02-2katb.mongodb.net:27017/test?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:20:30.981Z - info: Database - Done..
+2019-01-11T17:20:30.991Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:20:50.221Z - info: POST - /users/
+2019-01-11T17:20:50.222Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.comr
+2019-01-11T17:20:50.235Z - info: User created.
+2019-01-11T17:25:33.250Z - info: Route /users
+2019-01-11T17:25:33.260Z - info: Database - Creating database connections.
+2019-01-11T17:25:33.261Z - info: Database - Initializing database connection.
+2019-01-11T17:25:35.383Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017,clara-shard-00-01-2katb.mongodb.net:27017,clara-shard-00-02-2katb.mongodb.net:27017/test?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:25:35.384Z - info: Database - Done..
+2019-01-11T17:25:35.398Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:25:43.024Z - info: POST - /users/
+2019-01-11T17:25:43.025Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.comr
+2019-01-11T17:25:43.040Z - info: {"_id":"5c38d19740dbe5569cfadcda","id":10,"firstName":"Daenerys","lastName":"Targaryen","email":"dracarys@gmail.comr"}
+2019-01-11T17:25:43.040Z - info: User created.
+2019-01-11T17:29:25.206Z - info: Route /users
+2019-01-11T17:29:25.214Z - info: Database - Creating database connections.
+2019-01-11T17:29:25.215Z - info: Database - Initializing database connection.
+2019-01-11T17:29:26.568Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017,clara-shard-00-01-2katb.mongodb.net:27017,clara-shard-00-02-2katb.mongodb.net:27017/admin?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:29:26.569Z - info: Database - Done..
+2019-01-11T17:29:26.583Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:29:30.077Z - info: POST - /users/
+2019-01-11T17:29:30.077Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.comr
+2019-01-11T17:29:30.091Z - info: {"_id":"5c38d27a65cfe95828b55fc3","id":10,"firstName":"Daenerys","lastName":"Targaryen","email":"dracarys@gmail.comr"}
+2019-01-11T17:29:30.091Z - info: User created.
+2019-01-11T17:30:04.283Z - info: Route /users
+2019-01-11T17:30:04.295Z - info: Database - Creating database connections.
+2019-01-11T17:30:04.296Z - info: Database - Initializing database connection.
+2019-01-11T17:30:05.486Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017,clara-shard-00-01-2katb.mongodb.net:27017,clara-shard-00-02-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:30:05.487Z - info: Database - Done..
+2019-01-11T17:30:05.496Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:30:08.147Z - info: POST - /users/
+2019-01-11T17:30:08.147Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.com
+2019-01-11T17:30:08.166Z - info: {"_id":"5c38d2a0a5e03558bddeb823","id":10,"firstName":"Daenerys","lastName":"Targaryen","email":"dracarys@gmail.com"}
+2019-01-11T17:30:08.166Z - info: User created.
+2019-01-11T17:32:18.608Z - info: Route /users
+2019-01-11T17:32:18.616Z - info: Database - Creating database connections.
+2019-01-11T17:32:18.617Z - info: Database - Initializing database connection.
+2019-01-11T17:32:19.467Z - error: MongoError: connection 4 to clara-shard-00-01-2katb.mongodb.net:27017 closed
+    at Function.MongoError.create (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/error.js:29:11)
+    at Socket.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/connection/connection.js:214:22)
+    at Object.onceWrapper (events.js:315:30)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at TCP._handle.close [as _onclose] (net.js:561:12)
+2019-01-11T17:32:19.468Z - error: Server - There was something wrong: MongoError: connection 4 to clara-shard-00-01-2katb.mongodb.net:27017 closed
+2019-01-11T17:32:39.495Z - info: Route /users
+2019-01-11T17:32:39.503Z - info: Database - Creating database connections.
+2019-01-11T17:32:39.504Z - info: Database - Initializing database connection.
+2019-01-11T17:32:40.185Z - error: MongoError: connection 5 to clara-shard-00-02-2katb.mongodb.net:27017 closed
+    at Function.MongoError.create (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/error.js:29:11)
+    at Socket.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongodb/node_modules/mongodb-core/lib/connection/connection.js:214:22)
+    at Object.onceWrapper (events.js:315:30)
+    at emitOne (events.js:116:13)
+    at Socket.emit (events.js:211:7)
+    at TCP._handle.close [as _onclose] (net.js:561:12)
+2019-01-11T17:32:40.185Z - error: Server - There was something wrong: MongoError: connection 5 to clara-shard-00-02-2katb.mongodb.net:27017 closed
+2019-01-11T17:33:07.329Z - info: Route /users
+2019-01-11T17:33:07.343Z - info: Database - Creating database connections.
+2019-01-11T17:33:07.345Z - info: Database - Initializing database connection.
+2019-01-11T17:33:08.638Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017,clara-shard-00-01-2katb.mongodb.net:27017,clara-shard-00-02-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:33:08.639Z - info: Database - Done..
+2019-01-11T17:33:08.647Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:33:17.712Z - info: POST - /users/
+2019-01-11T17:33:17.713Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.com
+2019-01-11T17:33:17.726Z - info: {"_id":"5c38d35d93783f5abba61c8b","id":10,"firstName":"Daenerys","lastName":"Targaryen","email":"dracarys@gmail.com"}
+2019-01-11T17:33:17.726Z - info: User created.
+2019-01-11T17:35:50.103Z - info: Route /users
+2019-01-11T17:35:50.111Z - info: Database - Creating database connections.
+2019-01-11T17:35:50.112Z - info: Database - Initializing database connection.
+2019-01-11T17:35:50.117Z - error: Error: Invalid mongodb uri "mongodb+srv://admin:123456789789456123@clara-2katb.mongodb.net/test?retryWrites=true". Must begin with "mongodb://"
+    at muri (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/muri/lib/index.js:28:11)
+    at NativeConnection.Connection._handleOpenArgs (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongoose/lib/connection.js:199:16)
+    at NativeConnection.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongoose/lib/connection.js:309:37)
+    at NativeConnection.deprecated [as open] (internal/util.js:47:15)
+    at Mongoose.connect (/home/nicolas/Documents/Clara/clara-api-poc/node_modules/mongoose/lib/index.js:268:47)
+    at DBConnector.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:17:30)
+    at Generator.next (<anonymous>)
+    at /home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:3:12)
+    at DBConnector.createDbConnection (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:15:44)
+    at DBConnector.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:33:46)
+    at Generator.next (<anonymous>)
+    at /home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:3:12)
+    at DBConnector.init (/home/nicolas/Documents/Clara/clara-api-poc/dist/data/mongodb/connector.js:28:16)
+    at Server.<anonymous> (/home/nicolas/Documents/Clara/clara-api-poc/dist/server.js:28:43)
+    at Generator.next (<anonymous>)
+    at /home/nicolas/Documents/Clara/clara-api-poc/dist/server.js:7:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/nicolas/Documents/Clara/clara-api-poc/dist/server.js:3:12)
+2019-01-11T17:35:50.117Z - error: Server - There was something wrong: Error: Invalid mongodb uri "mongodb+srv://admin:123456789789456123@clara-2katb.mongodb.net/test?retryWrites=true". Must begin with "mongodb://"
+2019-01-11T17:37:13.349Z - info: Route /users
+2019-01-11T17:37:13.356Z - info: Database - Creating database connections.
+2019-01-11T17:37:13.357Z - info: Database - Initializing database connection.
+2019-01-11T17:37:15.466Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:37:15.468Z - info: Database - Done..
+2019-01-11T17:37:15.478Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:37:19.325Z - info: POST - /users/
+2019-01-11T17:37:19.326Z - info:  id=10, firstName=Daenerys, lastName=Targaryen, email=dracarys@gmail.com
+2019-01-11T17:37:19.340Z - info: {"_id":"5c38d44f659aa45c8fe3a639","id":10,"firstName":"Daenerys","lastName":"Targaryen","email":"dracarys@gmail.com"}
+2019-01-11T17:37:19.340Z - info: User created.
+2019-01-11T17:42:52.791Z - info: Route /users
+2019-01-11T17:42:52.798Z - info: Database - Creating database connections.
+2019-01-11T17:42:52.799Z - info: Database - Initializing database connection.
+2019-01-11T17:42:54.040Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:42:54.041Z - info: Database - Done..
+2019-01-11T17:42:54.053Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:43:17.231Z - info: GET - By email
+2019-01-11T17:45:39.759Z - info: Route /users
+2019-01-11T17:45:39.767Z - info: Database - Creating database connections.
+2019-01-11T17:45:39.768Z - info: Database - Initializing database connection.
+2019-01-11T17:45:41.358Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T17:45:41.359Z - info: Database - Done..
+2019-01-11T17:45:41.371Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T17:45:44.005Z - info: GET - By email
+2019-01-11T18:31:35.686Z - info: Route /users
+2019-01-11T18:31:35.693Z - info: Database - Creating database connections.
+2019-01-11T18:31:35.694Z - info: Database - Initializing database connection.
+2019-01-11T18:31:37.500Z - info: Database - successfully connected to mongodb://admin:123456789789456123@clara-shard-00-00-2katb.mongodb.net:27017/prueba?ssl=true&replicaSet=Clara-shard-0&authSource=admin&retryWrites=true
+2019-01-11T18:31:37.500Z - info: Database - Done..
+2019-01-11T18:31:37.508Z - info: Server - Up and running on: 0.0.0.0:4000
+2019-01-11T18:32:01.486Z - info: GET - By email

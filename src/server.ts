@@ -1,17 +1,39 @@
-import router from './routes';
+import Router from './routes';
 import Logger from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-
-const app = express();
+import Connector from './data/mongodb/connector';
 
 const PORT = process.env.PORT || 4000;
 const HOST = process.env.HOST || '0.0.0.0';
 
-app.use(bodyParser.json());
-app.use(router);
+class Server {
 
-app.listen(PORT, HOST, () => {
-    Logger.info(`Running server at ${HOST}:${PORT}`);
-});
+    constructor() {
+        this.init();
+    }
+
+    public async init() {
+        try {
+
+            const server = express();
+
+            server.use(bodyParser.json());
+            server.use(Router);
+
+            await Connector.init();
+
+            server.listen(PORT, HOST, () => {
+                Logger.info(`Server - Up and running on: ${process.env.HOST}:${process.env.PORT}`);
+            });
+
+
+        } catch (error) {
+            Logger.error(error.stack);
+            Logger.error(`Server - There was something wrong: ${error}`);
+        }
+    }
+}
+
+export default new Server();
 

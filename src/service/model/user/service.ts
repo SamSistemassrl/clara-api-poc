@@ -13,36 +13,32 @@ class UserService {
             userData.email
         );
 
-        // await UserDataService.create(user);
+        await UserDataService.create(user);
 
         return user;
     }
 
     public async getByEmail(email: string): Promise<Class> {
 
-        const user: Class =  new Class (
+        /*const user: Class =  new Class (
             7,
             'Jhon',
             'Snow',
             email
-        );
+        );*/
 
-        return user;
-
-        // return await UserDataService.getByEmail(email);
+        return await UserDataService.getByEmail(email);
     }
 
     public async getById(id) : Promise <Class> {
-        const user: Class =  new Class (
+        /*const user: Class =  new Class (
             id,
             'Daenerys',
             'Targaryen',
             'dracarys@gmail.com'
-        );
+        );*/
 
-        return user;
-
-        // return await UserDataService.getById(id);
+        return await UserDataService.getById(id);
     }
 }
 

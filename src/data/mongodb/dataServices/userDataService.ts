@@ -13,13 +13,21 @@ class UserDataService implements IUser {
 
         const entity: Class = await this.repository.createInstance(user);
 
+        Logger.info(JSON.stringify(entity));
+
         Logger.info('User created.');
-        return this.repository.save(entity);
+        const usr =  await this.repository.save(entity);
+
+        Logger.info(JSON.stringify(usr));
+
+        return usr;
     }
 
     public async getByEmail(email: string): Promise<any> {
 
         const entity = await this.repository.getByField('email', email, {first: true});
+
+        Logger.info(JSON.stringify(entity));
 
         if (!entity) return null;
 
