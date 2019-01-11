@@ -8,3 +8,4 @@ logs/*.log
 /coverage/
 .vscode/launch.json
 test/report/*
+logs
