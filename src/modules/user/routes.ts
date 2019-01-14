@@ -10,38 +10,34 @@ const router = express.Router();
 Logger.info('Route /users');
 
 const root = {
-    getById: function ({id}) {
-        return UserController.getById(id);
-    },
-    getByEmail: function ({email}) {
+    user: function ({email}) { // returns all the information needed for the Home Page after login.
         return UserController.getByEmail(email);
     },
+    login: function({email, password}) {
+        return UserController.login(email, password);
+    }
 };
 
-router.use('/graphql', graphqlHTTP({
+router.use('/graphql-user-testing-interface', graphqlHTTP({
     schema,
     rootValue: root,
     graphiql: true,
 }));
 
-// TODO: Change paths.
-router.get('/email', async (req, res) => {
-    const user: Class = await UserController.getByEmail(req.body.email);
-    res.status(200).send(user);
+router.get('/', (req, res) => {
+   res.status(200).send('Home of the user');
 });
 
-router.post('/', async (req, res) => {
-    const user: Class = await UserController.create(req, res);
-    res.status(201).send(user);
+router.get('/login', async (data, req, res) => {
+    console.log(data);
+    res.status(200).send(data);
 });
 
-router.get('/id', async (req, res) => {
-    const user: Class = await UserController.getById(req.body.id);
-    res.status(200).send(user);
+router.post('/login');
+
+router.post('/create', async(req, res) => {
+   const user: Class = await UserController.create(req, res);
+   res.status(200).send(user);
 });
-
-
-
-
 
 export default router;

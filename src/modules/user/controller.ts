@@ -1,20 +1,14 @@
 import Class from '../../service/model/user/class';
 import Service from '../../service/model/user/service';
-import Logger from '../../logger';
 import * as Boom from "boom";
 
 class UserController {
 
     constructor(){}
 
-    public async create(req, res) {
+    public async create(req, res): Promise<Class> {
         try {
-
-            Logger.info(`${req.method} - ${req.baseUrl}${req.path}`);
-
             const { user } = req.body;
-
-            Logger.info(user);
 
             let newUser: Class = await Service.create(user);
 
@@ -23,28 +17,25 @@ class UserController {
             return newUser;
 
         } catch (error) {
-            return res.send(Boom.badRequest(`I think something went wrong... ${error}`));
+            return Boom.badRequest(`I think something went wrong... ${error}`);
         }
     }
 
-
-    public async getById(id: number): Promise <Class> {
+    public async login(email: string, password: string): Promise <Class> {
         try {
+            const user = await Service.login(email, password);
 
-            Logger.info(`GET - By id`);
+            if(!user.error) throw new Error(user.error);
 
-            return await Service.getById(id);
-
-        } catch (error) {
+            return user;
+        }
+        catch (error) {
             return Boom.badRequest(`I think something went wrong... ${error}`);
         }
-
     }
 
     public async getByEmail(email: string): Promise <Class> {
         try {
-
-            Logger.info(`GET - By email`);
 
             return await Service.getByEmail(email);
 

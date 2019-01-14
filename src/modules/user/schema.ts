@@ -2,15 +2,14 @@ import { buildSchema } from 'graphql';
 
 const schema = buildSchema(`
   type User {
-    id: Int!
-    firstName: String!
-    lastName: String!
+    fullName: String!
     email: String!
+    password: String!
   }
 
   type Query {
-    getById(id: Int): User,
-    getByEmail(email: String): User
+    user(email: String!): User
+    login(email: String!, password: String!): User
   }
 `);
 

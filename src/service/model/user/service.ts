@@ -7,10 +7,9 @@ class UserService {
     public async create(userData): Promise<Class> {
 
         const user: Class =  new Class (
-            userData.id,
-            userData.firstName,
-            userData.lastName,
-            userData.email
+            userData.fullName,
+            userData.email,
+            userData.password
         );
 
         await UserDataService.create(user);
@@ -18,28 +17,29 @@ class UserService {
         return user;
     }
 
-    public async getByEmail(email: string): Promise<Class> {
+    public async login(email: string, password: string): Promise <any> {
+        const hash = '';
 
-        /*const user: Class =  new Class (
-            7,
-            'Jhon',
-            'Snow',
-            email
-        );*/
+        const userByEmail: Class = await this.getByEmail(email);
+
+        if(!userByEmail) return {user: { error: 'Non existent email' }};
+
+        const verifiedUser: boolean = await this.verifyCorrectPassword(userByEmail, hash);
+
+        if(verifiedUser) return {user: { error : 'Incorrect password' }};
+
+
+    }
+
+    public async getByEmail(email: string): Promise<Class> {
 
         return await UserDataService.getByEmail(email);
     }
 
-    public async getById(id) : Promise <Class> {
-        /*const user: Class =  new Class (
-            id,
-            'Daenerys',
-            'Targaryen',
-            'dracarys@gmail.com'
-        );*/
-
-        return await UserDataService.getById(id);
+    public verifyCorrectPassword(userByEmail: Class, hash: string): boolean {
+        return userByEmail.getPassword() === hash;
     }
+
 }
 
 export default new UserService();

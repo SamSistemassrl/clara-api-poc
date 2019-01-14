@@ -34,14 +34,6 @@ class UserDataService implements IUser {
         return this.factory.getModelFromEntity(entity);
     }
 
-    public async getById(id: number): Promise<any> {
-        const entity = await this.repository.getByField('id', id, {first: true});
-
-        if (!entity) return null;
-
-        return this.factory.getModelFromEntity(entity);
-    }
-
 }
 
 export default new UserDataService(new Repository<Class>(UserModel), new Factory<Class>(new Class()));

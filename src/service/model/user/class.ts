@@ -1,38 +1,20 @@
 class UserClass {
-    private id: number;
-    private firstName: string;
-    private lastName: string;
+    private fullName: string;
     private email: string;
+    private password: string;
 
-    constructor(id?, firstName?, lastName?, email?) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    constructor(fullName?, email?, password?) {
+        this.fullName = fullName;
         this.email = email;
+        this.password = password;
     }
 
-    getId(): number {
-        return this.id;
+    getFulName(): string {
+        return this.fullName;
     }
 
-    setId(id: number) {
-        this.id = id;
-    }
-
-    getFirstName(): string  {
-        return this.firstName;
-    }
-
-    setFirstName(firstName: string) {
-        this.firstName = firstName;
-    }
-
-    getLastName(): string {
-        return this.lastName;
-    }
-
-    setLastName(lastName: string) {
-        this.lastName = lastName;
+    setFullName(fullName: string) {
+        this.fullName = fullName;
     }
 
     getEmail(): string {
@@ -41,6 +23,14 @@ class UserClass {
 
     setEmail(email: string) {
         this.email = email;
+    }
+
+    getPassword(): string {
+        return this.password;
+    }
+
+    setPassword(password: string) {
+        this.password = password;
     }
 
 }
