@@ -18,7 +18,7 @@ const root = {
     }
 };
 
-router.use('/graphql-user-testing-interface', graphqlHTTP({
+router.use('/graphql', graphqlHTTP({
     schema,
     rootValue: root,
     graphiql: true,
@@ -27,13 +27,6 @@ router.use('/graphql-user-testing-interface', graphqlHTTP({
 router.get('/', (req, res) => {
    res.status(200).send('Home of the user');
 });
-
-router.get('/login', async (data, req, res) => {
-    console.log(data);
-    res.status(200).send(data);
-});
-
-router.post('/login');
 
 router.post('/create', async(req, res) => {
    const user: Class = await UserController.create(req, res);

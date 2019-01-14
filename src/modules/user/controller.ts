@@ -1,5 +1,6 @@
 import Class from '../../service/model/user/class';
 import Service from '../../service/model/user/service';
+import Logger from '../../logger';
 import * as Boom from "boom";
 
 class UserController {
@@ -17,6 +18,7 @@ class UserController {
             return newUser;
 
         } catch (error) {
+            Logger.error(error.stack);
             return Boom.badRequest(`I think something went wrong... ${error}`);
         }
     }
@@ -25,7 +27,9 @@ class UserController {
         try {
             const user = await Service.login(email, password);
 
-            if(!user.error) throw new Error(user.error);
+            Logger.info('user: '  + JSON.stringify(user));
+
+            if(user.error) throw new Error(user.error);
 
             return user;
         }

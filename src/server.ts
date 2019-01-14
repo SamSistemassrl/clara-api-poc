@@ -2,9 +2,7 @@ import Logger from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import Connector from './data/mongodb/connector';
-
-const PORT = process.env.PORT || 4000;
-const HOST = process.env.HOST || '0.0.0.0';
+import Constants from './utils/constants';
 
 class Server {
 
@@ -22,7 +20,7 @@ class Server {
             server.use(require("./routes").default);
 
 
-            server.listen(PORT, HOST, () => {
+            server.listen(Constants.Server.PORT, Constants.Server.HOST, () => {
                 Logger.info(`Server - Up and running on: ${process.env.HOST}:${process.env.PORT}`);
             });
 
